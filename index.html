@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MangoTango - AI Technology for Farmers</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4CAF50;
+            --secondary: #FF9800;
+            --dark: #2E7D32;
+            --light: #f8f8f8;
+            --accent: #388E3C;
+        }
+
+        body {
+            background-color: var(--light);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-image {
+            height: 40px;
+            width: auto;
+            display: block;
+        }
+
+        .logo i {
+            color: var(--primary);
+            font-size: 28px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 150px 0 100px;
+            background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+            text-align: center;
+            border-radius: 0 0 50px 50px;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: #555;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: var(--dark);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #E8F5E9;
+            transform: translateY(-3px);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background-color: var(--light);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #C8E6C9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .feature-icon i {
+            font-size: 32px;
+            color: var(--primary);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .feature-card p {
+            color: #666;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+        }
+
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            position: relative;
+        }
+
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 5px;
+            background-color: var(--primary);
+            z-index: 1;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .step p {
+            color: #555;
+            max-width: 250px;
+            margin: 0 auto;
+        }
+
+        /* App Preview */
+        .app-preview {
+            padding: 100px 0;
+            background-color: white;
+        }
+
+        .preview-container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .preview-text {
+            flex: 1;
+        }
+
+        .preview-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .preview-text p {
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .preview-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .phone-notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 25px;
+    background-color: #333;
+    border-radius: 0 0 15px 15px;
+    z-index: 10;
+}
+
+.phone-mockup {
+    width: 300px;
+    height: 600px;
+    background-color: #333;
+    border-radius: 40px;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    overflow: hidden;
+    padding: 15px;
+}
+
+.phone-screen {
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: 32px;
+    overflow: hidden;
+    position: relative;
+}
+
+.app-screenshot {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 25px;
+}
+
+        /* Download Section */
+        .download {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+            text-align: center;
+        }
+
+        .download h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .download p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 30px;
+            background-color: var(--dark);
+            color: white;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            background-color: #555;
+            transform: translateY(-5px);
+        }
+
+        .download-btn i {
+            font-size: 32px;
+        }
+
+        .download-text {
+            text-align: left;
+        }
+
+        .download-text span {
+            font-size: 0.8rem;
+            display: block;
+        }
+
+        .download-text strong {
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .preview-container {
+                flex-direction: column;
+            }
+            
+            .preview-text, .preview-image {
+                flex: none;
+                width: 100%;
+            }
+            
+            .hero h2 {
+                font-size: 2.8rem;
+            }
+            
+            .steps-container::before {
+                display: none;
+            }
+            
+            .steps-container {
+                flex-direction: column;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .hero {
+                padding: 120px 0 80px;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .download-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .phone-mockup {
+                width: 250px;
+                height: 500px;
+            }
+            
+            .phone-screen {
+                width: 220px;
+                height: 470px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="logo">
+                    <img src="public/logo.png" alt="MangoTango Logo" class="logo-image">
+                    <h1>Mango<span>Tango</span></h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#download">Download</a></li>
+                    </ul>
+                </nav>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h2>AI-Powered Farming Solutions</h2>
+            <p>MangoTango leverages cutting-edge AI technology to help farmers identify diseases, connect with agriculture experts, and get weather insights for sustainable agriculture.</p>
+            <div class="cta-buttons">
+                <a href="#download" class="btn btn-primary">
+                    <i class="fas fa-download"></i>
+                    Download App
+                </a>
+                <a href="#how-it-works" class="btn btn-secondary">
+                    <i class="fas fa-play-circle"></i>
+                    How It Works
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>AI Features for Farmers</h2>
+                <p>Our technology helps farmers increase productivity and reduce crop loss</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>Disease Identification</h3>
+                    <p>Simply take a photo of your crops and our AI will instantly identify diseases, pests, and nutrient deficiencies.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Agriculture Expert Message</h3>
+                    <p>Connect directly with agriculture experts for personalized advice and solutions to your farming challenges.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud-sun"></i>
+                    </div>
+                    <h3>Weather Insights</h3>
+                    <p>Get accurate weather forecasts and insights tailored to your specific location and crop needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>How MangoTango Works</h2>
+                <p>Simple steps to leverage AI technology for your farming needs</p>
+            </div>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Download & Setup</h3>
+                    <p>Download the app and set up your farm profile with location and crop details</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Use Features</h3>
+                    <p>Take photos for disease detection, message experts, or check weather insights</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Get Results</h3>
+                    <p>Receive instant analysis, expert advice, and actionable recommendations</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Improve Farming</h3>
+                    <p>Implement the suggestions to protect your crops and increase yield</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Preview -->
+    <section class="app-preview">
+        <div class="container">
+            <div class="preview-container">
+                <div class="preview-text">
+                    <h2>Smart Farming in Your Pocket</h2>
+                    <p>MangoTango's intuitive interface makes advanced AI technology accessible to farmers of all experience levels. Get real-time insights and recommendations to optimize your farming operations.</p>
+            
+                    <a href="#download" class="btn btn-primary">
+                        <i class="fas fa-download"></i>
+                        Get the App
+                    </a>
+                </div>
+                <div class="preview-image">
+    <div class="preview-image">
+    <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+            <img src="public/image.jpg" alt="MangoTango Mobile App" class="app-screenshot">
+        </div>
+    </div>
+</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="download" id="download">
+        <div class="container">
+            <h2>Download MangoTango Now</h2>
+            <p>Join thousands of farmers using AI technology to improve their crops and livelihoods</p>
+            <div class="download-buttons">
+                <a href="https://mega.nz/file/LBsEQRrQ#16H41dF3iPDR9jTp7kOUNoKxM5fXl4Hjb1WCsHtijMQ" class="download-btn">
+                    <i class="fas fa-download"></i>
+                    <div class="download-text">
+                        <span>Download the</span>
+                        <strong>MangoTango App</strong>
+                    </div>
+                </a>
+            </div>
+            <p style="margin-top: 20px; color: #666; font-size: 0.9rem;">Direct download via MEGA - No app store required</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>MangoTango</h3>
+                    <p>Empowering farmers with AI technology for sustainable agriculture and increased productivity.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#download">Download</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Farmers Guide</a></li>
+                        <li><a href="#">Disease Database</a></li>
+                        <li><a href="#">Weather Patterns</a></li>
+                        <li><a href="#">Support Center</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> mangotango@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> University of Cebu - Banilad Campus</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 MangoTango. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            const nav = document.querySelector('nav ul');
+            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if(window.innerWidth <= 768) {
+                        document.querySelector('nav ul').style.display = 'none';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
