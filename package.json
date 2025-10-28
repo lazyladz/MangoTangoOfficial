@@ -1,0 +1,9 @@
+{
+  "name": "mangotango",
+  "version": "1.0.0",
+  "description": "AI Technology for Farmers",
+  "scripts": {
+    "build": "echo 'Building MangoTango' && find . -name '*.html' -o -name '*.png' -o -name '*.jpg' -o -name '*.json' | head -10",
+    "now-build": "echo 'Build complete'"
+  }
+}
